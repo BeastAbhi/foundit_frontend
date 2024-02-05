@@ -1,15 +1,16 @@
-import react from "react";
-import postContext from "./postContext";
+import { useState } from "react";
+import PostContext from "./postContext";
 
 const PostState = (props) =>{
-    const state ={
+    const s1 ={
         "name": "abhi"
     }
+    const [state, setState] = useState(s1)
     return (
-        <PostState.provider value={state}>
+        <PostContext.Provider value={{state}}>
             {/* this line is compersory for using context api */}
-            {props.childern}
-        </PostState.provider>
+            {props.children}
+        </PostContext.Provider>
     )
 }
 
