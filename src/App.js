@@ -11,10 +11,12 @@ function App() {
       <PostState>
         <BrowserRouter>
           <Navbar />
-          <Routes>
-            <Route path="/Home" element={<Home />}></Route>
-            <Route path="/About" element={<About/>}></Route>
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/about" element={<About />}></Route>
+            </Routes>
+          </div>
         </BrowserRouter>
       </PostState>
     </div>
