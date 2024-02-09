@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import postContext from "../context/posts/postContext";
 
 function AddPostForm(props) {
-    const {changeFormVisibality, formVisibality} = props;
+  const { changeFormVisibality, formVisibality } = props;
+  const context = useContext(postContext);
+  const { addPost } = context;
+  const [post, setPost] = useState({itemName: "", collectFrom: "", contact: "", image: "",description: ""})
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    changeFormVisibality();
+    addPost(post.itemName, post.collectFrom, post.contact, post.image, post.description)
+  };
+
+  const onChange = (e) =>{
+      setPost({...post, [e.target.name]: e.target.value})
+  }
+  const onFileChange = (e) =>{
+    setPost({...post, [e.target.name]: e.target.files[0]})
+  }
   return (
     <>
       <div
@@ -11,6 +28,7 @@ function AddPostForm(props) {
           height: "100%",
           width: "100%",
           backgroundColor: "red",
+          zIndex: "10",
         }}
       >
         <form
@@ -23,47 +41,58 @@ function AddPostForm(props) {
           }}
         >
           <fieldset>
-            <legend>Disabled fieldset example</legend>
+            <legend>Post</legend>
             <div className="mb-3">
-              <label htmlFor="disabledTextInput" className="form-label">
-                Disabled input
-              </label>
               <input
                 type="text"
-                id="disabledTextInput"
+                name="itemName"
                 className="form-control"
-                placeholder="Disabled input"
+                placeholder="Item Name"
+                onChange={onChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="disabledSelect" className="form-label">
-                Disabled select menu
-              </label>
-              <select id="disabledSelect" className="form-select">
-                <option>Disabled select</option>
-              </select>
+              <input
+                type="text"
+                name="collectFrom"
+                className="form-control"
+                placeholder="Collect form"
+                onChange={onChange}
+              />
             </div>
             <div className="mb-3">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="disabledFieldsetCheck"
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="disabledFieldsetCheck"
-                >
-                  Can't check this
-                </label>
-              </div>
+              <input
+                type="text"
+                name="contact"
+                className="form-control"
+                placeholder="Contact"
+                onChange={onChange}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="text"
+                name="description"
+                className="form-control"
+                placeholder="Description"
+                onChange={onChange}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="file"
+                name="image"
+                className="form-control"
+                accept="image/*"
+                onChange={onFileChange}
+              />
             </div>
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={changeFormVisibality}
+              onClick={handleClick}
             >
-              Submit
+              Post
             </button>
           </fieldset>
         </form>

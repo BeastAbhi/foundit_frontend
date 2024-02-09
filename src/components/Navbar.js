@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
+//We use useLocation hook for high lighiting the routen as user click it.
 function Navbar() {
   let location = useLocation();
-  useEffect(() => {
-    console.log(location.pathname)
-  }, [location])
-  
+
   return (
 
     <>

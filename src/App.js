@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import PostState from "./context/posts/PostState";
+import Alert from "./components/Alert";
+
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
       <PostState>
         <BrowserRouter>
           <Navbar />
+          <Alert message="This is test alert"/>
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />}></Route>
@@ -24,4 +27,4 @@ function App() {
 }
 
 export default App;
-//npm react-router-dom concurrently
+//npm react-router-dom 
