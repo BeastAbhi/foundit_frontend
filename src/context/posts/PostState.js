@@ -1,7 +1,11 @@
 import { useState } from "react";
 import PostContext from "./postContext";
+import axios from "axios";
 
 const PostState = (props) => {
+  //Function to convert image to string base64
+
+
   //PUT this url in the .env file
   const host = "http://localhost:5000";
   const postsInitial = []
@@ -23,8 +27,9 @@ const PostState = (props) => {
     }
 
   //Add Post
-  const addPost = async (itemName, collectFrom, contact, image) => {
+  const addPost = async (itemName, collectFrom, contact, image,description) => {
     //API call
+
     const response = await fetch(`${host}/api/posts/addpost`, {
         method: "POST",
         headers: {
@@ -32,7 +37,7 @@ const PostState = (props) => {
           "auth-token":
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVhMjZiYTI3YWFkOGNlMDgwOTU2ZjkyIn0sImlhdCI6MTcwNTE0MzIwMn0.TLpZsypxCZhjt4dAqHnxQFlekLNeuaL5O9oKigibMf4",
         },
-        body: JSON.stringify({itemName, collectFrom, contact, image}),
+        body: JSON.stringify({itemName, collectFrom, contact, image, description}),
       });
       const json = response.json;
     //Logic to add new Post
@@ -42,6 +47,7 @@ const PostState = (props) => {
       itemName: itemName,
       collectFrom: collectFrom,
       contact: contact,
+      description: description,
       date: "2024-01-13T12:19:23.481Z",
       __v: 0,
     };
@@ -60,7 +66,7 @@ const PostState = (props) => {
   };
 
   //Edit Post
-  const editPost = async (id, itemName, collectFrom, contact, image) => {
+  const editPost = async (id, itemName, collectFrom, contact, image, description) => {
     //API call
     const response = await fetch(`${host}/api/posts/updatepost/${id}`, {
       method: "POST",
@@ -69,7 +75,7 @@ const PostState = (props) => {
         "auth-token":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVhMjZiYTI3YWFkOGNlMDgwOTU2ZjkyIn0sImlhdCI6MTcwNTE0NTY5MX0.jGGDvioAG5tQ1cW4R510Ugy--BKtFSfngVYC-j36t_0",
       },
-      body: JSON.stringify({itemName, collectFrom, contact, image}),
+      body: JSON.stringify({itemName, collectFrom, contact, image, description}),
     });
     const json = response.json;
     //Logic to edit an post
@@ -79,7 +85,8 @@ const PostState = (props) => {
         element.itemName = itemName;
         element.collectFrom = collectFrom;
         element.contact = contact;
-        //element.image = image
+        element.description = description;
+        element.image = image;
       }
     }
   };

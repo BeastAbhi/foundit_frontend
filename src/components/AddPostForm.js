@@ -16,8 +16,10 @@ function AddPostForm(props) {
   const onChange = (e) =>{
       setPost({...post, [e.target.name]: e.target.value})
   }
-  const onFileChange = (e) =>{
-    setPost({...post, [e.target.name]: e.target.files[0]})
+  const onFileChange = async (e) =>{
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
+    setPost({...post, [e.target.name]: base64})
   }
   return (
     <>
@@ -102,3 +104,17 @@ function AddPostForm(props) {
 }
 
 export default AddPostForm;
+
+//This function will convert image to base64 Format
+function convertToBase64(file){
+  return new Promise((resolve, reject) =>{
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = () =>{
+      resolve(fileReader.result)
+    };
+    fileReader.onerror = (error) =>{
+      reject(error)
+    }
+  })
+}
