@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AddPostForm from "./AddPostForm";
-import Posts from "./Posts";
+import AddPostForm from "./PostComponents/AddPostForm";
+import Posts from "./PostComponents/Posts";
 
 function Home() {
 

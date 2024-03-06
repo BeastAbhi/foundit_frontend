@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import postContext from "../context/posts/postContext";
+import postContext from "../../context/posts/postContext";
 
 function AddPostForm(props) {
   const { changeFormVisibality, formVisibality } = props;

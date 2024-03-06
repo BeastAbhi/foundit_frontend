@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import postContext from "../context/posts/postContext";
+import postContext from "../../context/posts/postContext";
 
 
 function PostItem(props) {
@@ -14,15 +14,7 @@ function PostItem(props) {
     setVisibality(!Visibality);
   };
   const { post } = props;
-  const { data, contentType } = props.post.image;
-  console.log(props.post.image)
-  const base64 = btoa(
-    new Uint8Array(data.data).reduce(
-      (data, byte) => data + String.fromCharCode(byte),
-      '',
-    ),
-  );
-  const imageUrl = `data:${contentType};base64,${base64}`;
+console.log(post.image)
   return (
     <>
       <div
@@ -32,7 +24,7 @@ function PostItem(props) {
         }}
       >
         <div className="card  my-3">
-          <img src={imageUrl} className="card-img-top" />
+        <img src={`data:${props.post.image.contentType};base64,${props.post.image.data}`} className="card-img-top" />
           <div className="card-body">
             <h5 className="card-title">{post.itemName}</h5>
             <p className="card-text">Collect from: {post.collectFrom}</p>
