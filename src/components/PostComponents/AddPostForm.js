@@ -5,23 +5,52 @@ function AddPostForm(props) {
   const { changeFormVisibality, formVisibality } = props;
   const context = useContext(postContext);
   const { addPost } = context;
-  const [post, setPost] = useState({itemName: "", collectFrom: "", contact: "", image: "",description: ""})
+  const [post, setPost] = useState({
+    itemName: "",
+    collectFrom: "",
+    contact: "",
+    image: "",
+    description: "",
+    imageId: "",
+  });
+  const [selectedImage, setSelectedImage] = useState("");
 
   const handleClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     changeFormVisibality();
-    addPost(post.itemName, post.collectFrom, post.contact, post.image, post.description)
+    const data = new FormData();
+    data.append("file", selectedImage);
+    data.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+    data.append("cloud_name", process.env.REACT_APP_UPLOAD_PRESET);
+    fetch(process.env.REACT_APP_IMAGE_UPLOAD_LINK,{
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        post.image = data.url;
+        post.imageId = data.public_Id;
+        addPost(
+          post.itemName,
+          post.collectFrom,
+          post.contact,
+          post.image,
+          post.description,
+          post.imageId
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const onChange = (e) =>{
-      setPost({...post, [e.target.name]: e.target.value})
-  }
-  const onFileChange = async (e) =>{
-    // const file = e.target.files[0]
-    // const base64 = await convertToBase64(file)
-    // setPost({...post, [e.target.name]: base64})
-    setPost({...post, [e.target.name]: e.target.files[0]})
-  }
+  const onChange = (e) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
+  const onFileChange = (e) => {
+    setSelectedImage(e.target.files[0]);
+  };
   return (
     <>
       <div
@@ -105,17 +134,3 @@ function AddPostForm(props) {
 }
 
 export default AddPostForm;
-
-//This function will convert image to base64 Format
-// function convertToBase64(file){
-//   return new Promise((resolve, reject) =>{
-//     const fileReader = new FileReader()
-//     fileReader.readAsDataURL(file)
-//     fileReader.onload = () =>{
-//       resolve(fileReader.result)
-//     };
-//     fileReader.onerror = (error) =>{
-//       reject(error)
-//     }
-//   })
-// }

@@ -13,8 +13,7 @@ function PostItem(props) {
     setActualPost(post);
     setVisibality(!Visibality);
   };
-  const { post } = props;
-console.log(post.image)
+  const { post, updatePost } = props;
   return (
     <>
       <div
@@ -24,7 +23,7 @@ console.log(post.image)
         }}
       >
         <div className="card  my-3">
-        <img src={`data:${props.post.image.contentType};base64,${props.post.image.data}`} className="card-img-top" />
+        <img src={post.image} className="card-img-top" />
           <div className="card-body">
             <h5 className="card-title">{post.itemName}</h5>
             <p className="card-text">Collect from: {post.collectFrom}</p>
@@ -41,14 +40,14 @@ console.log(post.image)
         }}
       >
         <div className="card  my-3">
-          <img src="..." className="card-img-top" alt="..." />
+          <img src={ActualPost.image} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{ActualPost.itemName}</h5>
             <p className="card-text">Collect from: {ActualPost.collectFrom}</p>
             <p className="card-text">Contact {ActualPost.contact}</p>
             <div className="d-flex flex-row-reverse">
-              <i className="bi bi-recycle mx-2" onClick={() =>{deletePost(post._id)}}>🗑️</i>
-              <i className="bi bi-recycle mx-2" onClick={() =>{editPost(post._id)}}>✏️</i>
+              <i className="bi bi-recycle mx-2" onClick={() =>{deletePost(post._id,post.imageId)}}>🗑️</i>
+              <i className="bi bi-recycle mx-2" onClick={() =>{updatePost(post)}}>✏️</i>
             </div>
           </div>
         </div>

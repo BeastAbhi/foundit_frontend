@@ -1,12 +1,10 @@
 import { useState } from "react";
 import PostContext from "./postContext";
-import { Form } from "react-router-dom";
+
 
 const PostState = (props) => {
-  //Function to convert image to string base64
 
-  //PUT this url in the .env file
-  const host = "http://localhost:5000";
+  const host = process.env.REACT_APP_HOST_LINK;
   const postsInitial = [];
   const [posts, setPosts] = useState(postsInitial);
 
@@ -26,32 +24,19 @@ const PostState = (props) => {
   };
 
   //Add Post
-  const addPost = async (
-    itemName,
-    collectFrom,
-    contact,
-    image,
-    description
-  ) => {
+  const addPost = async (itemName, collectFrom, contact, image, description) => {
     //API call
-    const formData = new FormData();
-    formData.append("itemName", itemName);
-    formData.append("collectFrom", collectFrom);
-    formData.append("contact", contact);
-    formData.append("image", image);
-    formData.append("description", description);
     const response = await fetch(`${host}/api/posts/addpost`, {
       method: "POST",
       headers: {
-        // "Conternt-Type" :'multipart/form-data',
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         "auth-token":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVhMjZiYTI3YWFkOGNlMDgwOTU2ZjkyIn0sImlhdCI6MTcwNTE0MzIwMn0.TLpZsypxCZhjt4dAqHnxQFlekLNeuaL5O9oKigibMf4",
       },
-      // body: JSON.stringify({itemName, collectFrom, contact, image, description})
-      body: formData,
+      body: JSON.stringify({itemName, collectFrom, contact, image, description})
     });
     const json = response.json;
+    console.log(json)
     //Logic to add new Post
     let post = {
       _id: "65a27fcbc44ab899e190d0f813",
@@ -68,8 +53,19 @@ const PostState = (props) => {
   };
 
   //Delete Post
-  const deletePost = async (id) => {
+  const deletePost = async (id,imageId) => {
     //Api Call
+    const response = await fetch(`${host}/api/posts/deletepost/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVhMjZiYTI3YWFkOGNlMDgwOTU2ZjkyIn0sImlhdCI6MTcwNTE0NTY5MX0.jGGDvioAG5tQ1cW4R510Ugy--BKtFSfngVYC-j36t_0",
+      }
+    });
+    const json = response.json;
+    //Delete the image from cloudinary TODO:
+
 
     //Logic to Delete an post
     let newPost = posts.filter((note) => {
@@ -85,7 +81,8 @@ const PostState = (props) => {
     collectFrom,
     contact,
     image,
-    description
+    description,
+    imageId
   ) => {
     //API call
     const response = await fetch(`${host}/api/posts/updatepost/${id}`, {
@@ -101,6 +98,7 @@ const PostState = (props) => {
         contact,
         image,
         description,
+        imageId,
       }),
     });
     const json = response.json;
@@ -113,6 +111,7 @@ const PostState = (props) => {
         element.contact = contact;
         element.description = description;
         element.image = image;
+        element.imageId = imageId;
       }
     }
   };

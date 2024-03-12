@@ -21,7 +21,8 @@ function Home() {
       >
         Add Post
       </button>
-      <Posts/>
+      <Posts changeFormVisibality={changeFormVisibality}
+        formVisibality={formVisibality}/>
     </>
   );
 }
