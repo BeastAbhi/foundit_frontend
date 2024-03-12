@@ -28,7 +28,6 @@ function AddPostForm(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         post.image = data.url;
         post.imageId = data.public_Id;
         addPost(
@@ -52,7 +51,7 @@ function AddPostForm(props) {
     setSelectedImage(e.target.files[0]);
   };
   return (
-    <>
+
       <div
         className="d-flex justify-content-center align-items-center"
         style={{
@@ -129,7 +128,6 @@ function AddPostForm(props) {
           </fieldset>
         </form>
       </div>
-    </>
   );
 }
 

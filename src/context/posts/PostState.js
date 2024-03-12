@@ -53,7 +53,7 @@ const PostState = (props) => {
   };
 
   //Delete Post
-  const deletePost = async (id,imageId) => {
+  const deletePost = async (id) => {
     //Api Call
     const response = await fetch(`${host}/api/posts/deletepost/${id}`, {
       method: "DELETE",
@@ -80,13 +80,11 @@ const PostState = (props) => {
     itemName,
     collectFrom,
     contact,
-    image,
     description,
-    imageId
   ) => {
     //API call
     const response = await fetch(`${host}/api/posts/updatepost/${id}`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "auth-token":
@@ -96,24 +94,25 @@ const PostState = (props) => {
         itemName,
         collectFrom,
         contact,
-        image,
         description,
-        imageId,
       }),
     });
     const json = response.json;
+
+    //This line make a deep copy of an post
+    let newPost = JSON.parse(JSON.stringify(posts))
     //Logic to edit an post
-    for (let index = 0; index < posts.length; index++) {
-      const element = posts[index];
+    for (let index = 0; index < newPost.length; index++) {
+      const element = newPost[index];
       if (element._id === id) {
-        element.itemName = itemName;
-        element.collectFrom = collectFrom;
-        element.contact = contact;
-        element.description = description;
-        element.image = image;
-        element.imageId = imageId;
+        newPost[index].itemName = itemName;
+        newPost[index].collectFrom = collectFrom;
+        newPost[index].contact = contact;
+        newPost[index].description = description;
+        break
       }
     }
+    setPosts(newPost)
   };
 
   return (

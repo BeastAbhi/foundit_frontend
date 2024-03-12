@@ -1,54 +1,167 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import postContext from "../../context/posts/postContext";
 import PostItem from "./PostItem";
-import AddPostForm from "./AddPostForm";
+import ActivePostItem from "./ActivePostItem";
 
 const Posts = (props) => {
   const context = useContext(postContext);
-  const { posts, getPosts } = context;
+  const { posts, getPosts, editPost } = context;
   useEffect(() => {
     getPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //This line is to set the visiblity of an actual post div
+  const [ActualPost, setActualPost] = useState("");
+  const [Visibality, setVisibality] = useState(false);
+  const changeVisibality = (post) => {
+    setActualPost(post);
+    setVisibality(!Visibality);
+  };
+  const [post, setPost] = useState({
+    id: "",
+    eitemName: "",
+    ecollectFrom: "",
+    econtact: "",
+    edescription: "",
+    eimage:""
+  });
 
-  const updatePost = (post) => {
+  const updatePost = (currentPost) => {
     ref.current.click();
+    setPost({id:currentPost._id,eitemName: currentPost.itemName, ecollectFrom: currentPost.collectFrom, econtact: currentPost.contact, edescription: currentPost.description, eimage: currentPost.image})
   };
   const ref = useRef(null);
-  return (
-    <>
-<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" ref={ref}>
-  Launch demo modal
-</button>
+  const refClose = useRef(null);
 
-<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Post</h1>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  const handleClick = (e) => {
+    e.preventDefault();
+    editPost(
+          post.id,
+          post.eitemName,
+          post.ecollectFrom,
+          post.econtact,
+          post.edescription,
+        );
+        refClose.current.click()
+        setVisibality(!Visibality)
+  };
+
+  const onChange = (e) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <div className="d-flex justify-content-center align-items-center position-relitive">
+      <button
+        type="button"
+        className="btn btn-primary d-none"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        ref={ref}
+      >
+        Launch demo modal
+      </button>
+
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Edit Post
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <fieldset>
+                  <div className="mb-3">
+                    <img className="w-50 h-50 d-block"src={post.eimage}/>
+                    <sup>You can't change the image</sup>
+
+                    <input
+                      type="text"
+                      name="eitemName"
+                      className="form-control"
+                      placeholder="Item Name"
+                      value={post.eitemName}
+                      onChange={onChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="ecollectFrom"
+                      className="form-control"
+                      placeholder="Collect form"
+                      value={post.ecollectFrom}
+                      onChange={onChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="econtact"
+                      className="form-control"
+                      placeholder="Contact"
+                      value={post.econtact}
+                      onChange={onChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="edescription"
+                      className="form-control"
+                      placeholder="Description"
+                      value={post.edescription}
+                      onChange={onChange}
+                    />
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+                ref={refClose}
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClick}
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="modal-body">
-        <AddPostForm hangeFormVisibality={props.changeFormVisibality}
-        formVisibality={props.formVisibality}/>
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Update</button>
-      </div>
-    </div>
-  </div>
-</div>
 
       <div className="row my-3">
         <h1>Posts</h1>
         {posts.map((post) => {
           return (
-            <PostItem key={post._id} post={post} updatePost={updatePost} />
+            <PostItem key={post._id} post={post}  changeVisibality={changeVisibality}/>
           );
         })}
       </div>
-    </>
+      <ActivePostItem updatePost={updatePost} Visibality={Visibality} ActualPost={ActualPost} changeVisibality={changeVisibality}/>
+    </div>
   );
 };
 
