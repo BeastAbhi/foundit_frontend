@@ -23,12 +23,19 @@ const Posts = (props) => {
     ecollectFrom: "",
     econtact: "",
     edescription: "",
-    eimage:""
+    eimage: "",
   });
 
   const updatePost = (currentPost) => {
     ref.current.click();
-    setPost({id:currentPost._id,eitemName: currentPost.itemName, ecollectFrom: currentPost.collectFrom, econtact: currentPost.contact, edescription: currentPost.description, eimage: currentPost.image})
+    setPost({
+      id: currentPost._id,
+      eitemName: currentPost.itemName,
+      ecollectFrom: currentPost.collectFrom,
+      econtact: currentPost.contact,
+      edescription: currentPost.description,
+      eimage: currentPost.image,
+    });
   };
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -36,14 +43,14 @@ const Posts = (props) => {
   const handleClick = (e) => {
     e.preventDefault();
     editPost(
-          post.id,
-          post.eitemName,
-          post.ecollectFrom,
-          post.econtact,
-          post.edescription,
-        );
-        refClose.current.click()
-        setVisibality(!Visibality)
+      post.id,
+      post.eitemName,
+      post.ecollectFrom,
+      post.econtact,
+      post.edescription
+    );
+    refClose.current.click();
+    setVisibality(!Visibality);
   };
 
   const onChange = (e) => {
@@ -86,7 +93,7 @@ const Posts = (props) => {
               <form>
                 <fieldset>
                   <div className="mb-3">
-                    <img className="w-50 h-50 d-block"src={post.eimage}/>
+                    <img className="w-50 h-50 d-block" src={post.eimage} />
                     <sup>You can't change the image</sup>
 
                     <input
@@ -96,6 +103,8 @@ const Posts = (props) => {
                       placeholder="Item Name"
                       value={post.eitemName}
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -106,6 +115,8 @@ const Posts = (props) => {
                       placeholder="Collect form"
                       value={post.ecollectFrom}
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -116,6 +127,8 @@ const Posts = (props) => {
                       placeholder="Contact"
                       value={post.econtact}
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -141,6 +154,7 @@ const Posts = (props) => {
                 Close
               </button>
               <button
+              disabled={post.eitemName.length < 3 || post.econtact.length < 5 || post.ecollectFrom.length < 5}
                 type="button"
                 className="btn btn-primary"
                 onClick={handleClick}
@@ -154,13 +168,25 @@ const Posts = (props) => {
 
       <div className="row my-3">
         <h1>Posts</h1>
+        <div className="container">
+          {posts.length === 0 && "No posts yet!!"}
+        </div>
         {posts.map((post) => {
           return (
-            <PostItem key={post._id} post={post}  changeVisibality={changeVisibality}/>
+            <PostItem
+              key={post._id}
+              post={post}
+              changeVisibality={changeVisibality}
+            />
           );
         })}
       </div>
-      <ActivePostItem updatePost={updatePost} Visibality={Visibality} ActualPost={ActualPost} changeVisibality={changeVisibality}/>
+      <ActivePostItem
+        updatePost={updatePost}
+        Visibality={Visibality}
+        ActualPost={ActualPost}
+        changeVisibality={changeVisibality}
+      />
     </div>
   );
 };

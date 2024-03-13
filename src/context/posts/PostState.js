@@ -35,20 +35,8 @@ const PostState = (props) => {
       },
       body: JSON.stringify({itemName, collectFrom, contact, image, description})
     });
-    const json = response.json;
-    console.log(json)
+    const post = await response.json();
     //Logic to add new Post
-    let post = {
-      _id: "65a27fcbc44ab899e190d0f813",
-      user: "65a26ba27aad8ce080956f92",
-      itemName: itemName,
-      collectFrom: collectFrom,
-      contact: contact,
-      image: image,
-      description: description,
-      date: "2024-01-13T12:19:23.481Z",
-      __v: 0,
-    };
     setPosts(posts.concat(post));
   };
 
@@ -63,7 +51,7 @@ const PostState = (props) => {
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVhMjZiYTI3YWFkOGNlMDgwOTU2ZjkyIn0sImlhdCI6MTcwNTE0NTY5MX0.jGGDvioAG5tQ1cW4R510Ugy--BKtFSfngVYC-j36t_0",
       }
     });
-    const json = response.json;
+    const json = response.json();
     //Delete the image from cloudinary TODO:
 
 
@@ -97,7 +85,7 @@ const PostState = (props) => {
         description,
       }),
     });
-    const json = response.json;
+    const json = response.json();
 
     //This line make a deep copy of an post
     let newPost = JSON.parse(JSON.stringify(posts))

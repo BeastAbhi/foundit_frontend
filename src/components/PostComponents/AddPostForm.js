@@ -22,7 +22,7 @@ function AddPostForm(props) {
     data.append("file", selectedImage);
     data.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
     data.append("cloud_name", process.env.REACT_APP_UPLOAD_PRESET);
-    fetch(process.env.REACT_APP_IMAGE_UPLOAD_LINK,{
+    fetch(process.env.REACT_APP_IMAGE_UPLOAD_LINK, {
       method: "post",
       body: data,
     })
@@ -42,6 +42,14 @@ function AddPostForm(props) {
       .catch((err) => {
         console.log(err);
       });
+    setPost({
+      itemName: "",
+      collectFrom: "",
+      contact: "",
+      image: "",
+      description: "",
+      imageId: "",
+    });
   };
 
   const onChange = (e) => {
@@ -51,83 +59,98 @@ function AddPostForm(props) {
     setSelectedImage(e.target.files[0]);
   };
   return (
-
-      <div
-        className="d-flex justify-content-center align-items-center"
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        position: "relative",
+        height: "100%",
+        width: "100%",
+        backgroundColor: "red",
+        zIndex: "10",
+      }}
+    >
+      <form
         style={{
-          position: "relative",
-          height: "100%",
-          width: "100%",
+          display: `${formVisibality ? "block" : "none"}`,
+          position: "absolute",
+          top: "50%",
+          right: "50%%",
           backgroundColor: "red",
-          zIndex: "10",
         }}
+        onSubmit={handleClick}
       >
-        <form
-          style={{
-            display: `${formVisibality ? "block" : "none"}`,
-            position: "absolute",
-            top: "50%",
-            right: "50%%",
-            backgroundColor: "red",
-          }}
-        >
-          <fieldset>
-            <legend>Post</legend>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="itemName"
-                className="form-control"
-                placeholder="Item Name"
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="collectFrom"
-                className="form-control"
-                placeholder="Collect form"
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="contact"
-                className="form-control"
-                placeholder="Contact"
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="description"
-                className="form-control"
-                placeholder="Description"
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="file"
-                name="image"
-                className="form-control"
-                accept="image/*"
-                onChange={onFileChange}
-              />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={handleClick}
-            >
-              Post
-            </button>
-          </fieldset>
-        </form>
-      </div>
+        <fieldset>
+          <legend>Post</legend>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="itemName"
+              className="form-control"
+              placeholder="Item Name"
+              onChange={onChange}
+              minLength={5}
+              required
+              value={post.itemName}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="collectFrom"
+              className="form-control"
+              placeholder="Collect form"
+              onChange={onChange}
+              minLength={5}
+              required
+              value={post.collectFrom}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="contact"
+              className="form-control"
+              placeholder="Contact"
+              onChange={onChange}
+              minLength={5}
+              required
+              value={post.contact}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="description"
+              className="form-control"
+              placeholder="Description"
+              onChange={onChange}
+              value={post.description}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="file"
+              name="image"
+              className="form-control"
+              accept="image/*"
+              onChange={onFileChange}
+              required
+            />
+          </div>
+          <button
+            disabled={
+              post.itemName.length < 3 ||
+              post.contact.length < 5 ||
+              post.collectFrom.length < 5
+            }
+            type="submit"
+            className="btn btn-primary"
+          >
+            Post
+          </button>
+        </fieldset>
+      </form>
+    </div>
   );
 }
 
