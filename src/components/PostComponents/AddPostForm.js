@@ -1,7 +1,10 @@
 import React, { useContext, useState } from "react";
 import postContext from "../../context/posts/postContext";
+import alertContext from "../../context/alerts/alertContext";
 
 function AddPostForm(props) {
+  const alertcon = useContext(alertContext);
+  const {showAlert} = alertcon;
   const { changeFormVisibality, formVisibality } = props;
   const context = useContext(postContext);
   const { addPost } = context;
@@ -38,9 +41,10 @@ function AddPostForm(props) {
           post.description,
           post.imageId
         );
+        showAlert('Post added','success')
       })
       .catch((err) => {
-        console.log(err);
+        showAlert(err,'danger')
       });
     setPost({
       itemName: "",

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import alertContext from "../context/alerts/alertContext";
 
 function Signup() {
+  const context = useContext(alertContext)
+  const {showAlert} = context;
   const [loginDetails, setLoginDetails] = useState({
     name: "",
     email: "",
@@ -25,13 +28,14 @@ function Signup() {
       if(json.success){
         localStorage.setItem('token', json.authtoken)
         navigate('/')
+        showAlert('Account Created Successfully','success')
       }
       else{
-        alert(json.error)
+        showAlert(json.error,'danger')
       }
     }
     else{
-        alert("Passwords dous't  match")
+        showAlert("Passwords dous't  match",'danger')
     }
   };
   const setValues = (e) => {

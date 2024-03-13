@@ -7,28 +7,30 @@ import PostState from "./context/posts/PostState";
 import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
+import AlertState from "./context/alerts/AlertState";
 
 function App() {
   return (
     <div className="App">
-      <PostState>
-        <BrowserRouter>
-          <Navbar />
-          <Alert message="This is test alert"/>
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/about" element={<About />}></Route>
-              <Route path="/login" element={<Login/>}></Route>
-              <Route path="/signup" element={<Signup/>}></Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </PostState>
+      <AlertState>
+        <PostState>
+          <BrowserRouter>
+            <Navbar />
+            <Alert message="This is test alert" />
+            <div className="container">
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/about" element={<About />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/signup" element={<Signup />}></Route>
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </PostState>
+      </AlertState>
     </div>
   );
 }
 
 export default App;
-//npm react-router-dom 
+//npm react-router-dom

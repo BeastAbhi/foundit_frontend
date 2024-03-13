@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import postContext from "../../context/posts/postContext";
-
+import React from "react";
 
 function PostItem(props) {
 

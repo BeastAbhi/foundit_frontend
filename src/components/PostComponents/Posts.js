@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import postContext from "../../context/posts/postContext";
 import PostItem from "./PostItem";
 import ActivePostItem from "./ActivePostItem";
+import alertContext from "../../context/alerts/alertContext";
 
-const Posts = (props) => {
+const Posts = () => {
+  const alertcon = useContext(alertContext);
+  const {showAlert} = alertcon;
   const context = useContext(postContext);
   const { posts, getPosts, editPost } = context;
   useEffect(() => {
@@ -51,6 +54,7 @@ const Posts = (props) => {
     );
     refClose.current.click();
     setVisibality(!Visibality);
+    showAlert('Updated successfully','success')
   };
 
   const onChange = (e) => {

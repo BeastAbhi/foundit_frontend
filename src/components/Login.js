@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate, useNavigationType } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import alertContext from "../context/alerts/alertContext";
 
 function Login() {
+  const context = useContext(alertContext)
+  const {showAlert} = context;
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   // useNavigate hook is use to redirect the user to another location
   let navigate = useNavigate()
@@ -20,9 +23,10 @@ function Login() {
         //save the authtoken and Redirect
         localStorage.setItem('token', json.authtoken)
         navigate('/')
+      showAlert('Loggedin Succesfully','success')
     }
     else{
-        alert(json.error)
+      showAlert(json.error,'danger')
     }
   };
   const setValues = (e) => {

@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import postContext from "../../context/posts/postContext";
+import alertContext from "../../context/alerts/alertContext";
 
 function ActivePostItem(props) {
+  const alertcon = useContext(alertContext);
+  const {showAlert} = alertcon;
   const context = useContext(postContext);
   const { deletePost } = context;
   const { Visibality, updatePost, ActualPost, changeVisibality } = props;
@@ -31,6 +34,7 @@ function ActivePostItem(props) {
                 className="bi bi-recycle mx-2"
                 onClick={() => {
                   deletePost(ActualPost._id);
+                  showAlert('Deleted successfully','success')
                 }}
               >
                 🗑️
