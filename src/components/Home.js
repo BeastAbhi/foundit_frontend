@@ -7,8 +7,7 @@ function Home() {
   const [formVisibality, setFormVisibality] = useState(false);
   const changeFormVisibality = () => {
     setFormVisibality(!formVisibality);
-  };
-  return (
+  };  return (
     <>
       <AddPostForm
         changeFormVisibality={changeFormVisibality}
@@ -21,8 +20,7 @@ function Home() {
       >
         Add Post
       </button>
-      <Posts changeFormVisibality={changeFormVisibality}
-        formVisibality={formVisibality}/>
+      <Posts userSpecific={false} givePower={false}/>
     </>
   );
 }

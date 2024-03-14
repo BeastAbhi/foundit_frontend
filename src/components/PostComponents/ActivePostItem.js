@@ -7,8 +7,7 @@ function ActivePostItem(props) {
   const {showAlert} = alertcon;
   const context = useContext(postContext);
   const { deletePost } = context;
-  const { Visibality, updatePost, ActualPost, changeVisibality } = props;
-
+  const { Visibality, updatePost, ActualPost, changeVisibality, givePower } = props;
   return (
     <div
       className="justify-content-center align-items-center position-absolute"
@@ -29,7 +28,7 @@ function ActivePostItem(props) {
             <p className="card-text">Collect from: {ActualPost.collectFrom}</p>
             <p className="card-text">Contact: {ActualPost.contact}</p>
             <p className="card-text">Description: {ActualPost.description}</p>
-            <div className="d-flex flex-row-reverse">
+            <div className={`d-${givePower ? "flex" : "none" } flex-row-reverse`}>
               <i
                 className="bi bi-recycle mx-2"
                 onClick={() => {

@@ -1,41 +1,39 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alerts/alertContext";
 
 function Signup() {
-  const context = useContext(alertContext)
-  const {showAlert} = context;
+  const context = useContext(alertContext);
+  const { showAlert } = context;
   const [loginDetails, setLoginDetails] = useState({
     name: "",
     email: "",
     password: "",
-    comfirmPass:""
+    comfirmPass: "",
   });
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const host = process.env.REACT_APP_HOST_LINK;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginDetails.comfirmPass === loginDetails.password) {
-        const {email, password, name} = loginDetails
+      const { email, password, name } = loginDetails;
       const response = await fetch(`${host}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({email, password, name}),
+        body: JSON.stringify({ email, password, name }),
       });
       const json = await response.json();
-      if(json.success){
-        localStorage.setItem('token', json.authtoken)
-        navigate('/')
-        showAlert('Account Created Successfully','success')
+      if (json.success) {
+        localStorage.setItem("token", json.authtoken);
+        navigate("/");
+        showAlert("Account Created Successfully", "success");
+      } else {
+        showAlert(json.error, "danger");
       }
-      else{
-        showAlert(json.error,'danger')
-      }
-    }
-    else{
-        showAlert("Passwords dous't  match",'danger')
+    } else {
+      showAlert("Passwords dous't  match", "danger");
     }
   };
   const setValues = (e) => {
@@ -43,7 +41,8 @@ function Signup() {
   };
 
   return (
-    <>
+    <div className="mt-3">
+    <h1>Create an account to use foundit</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -105,11 +104,14 @@ function Signup() {
             minLength={8}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </div>
+        <Link to={"/login"}>already have an account click here</Link>
       </form>
-    </>
+    </div>
   );
 }
 

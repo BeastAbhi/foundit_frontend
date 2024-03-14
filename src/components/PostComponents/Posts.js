@@ -3,14 +3,24 @@ import postContext from "../../context/posts/postContext";
 import PostItem from "./PostItem";
 import ActivePostItem from "./ActivePostItem";
 import alertContext from "../../context/alerts/alertContext";
+import { useNavigate } from "react-router-dom";
 
-const Posts = () => {
+const Posts = (props) => {
   const alertcon = useContext(alertContext);
-  const {showAlert} = alertcon;
+  const { showAlert } = alertcon;
   const context = useContext(postContext);
-  const { posts, getPosts, editPost } = context;
+  const { posts, getPosts, editPost, getUserPosts } = context;
+  const navigate = useNavigate();
   useEffect(() => {
-    getPosts();
+    if (localStorage.getItem("token")) {
+      if (!props.userSpecific) {
+        getPosts();
+      } else {
+        getUserPosts();
+      }
+    } else {
+      navigate("/login");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //This line is to set the visiblity of an actual post div
@@ -54,7 +64,7 @@ const Posts = () => {
     );
     refClose.current.click();
     setVisibality(!Visibality);
-    showAlert('Updated successfully','success')
+    showAlert("Updated successfully", "success");
   };
 
   const onChange = (e) => {
@@ -97,7 +107,11 @@ const Posts = () => {
               <form>
                 <fieldset>
                   <div className="mb-3">
-                    <img className="w-50 h-50 d-block" src={post.eimage} />
+                    <img
+                      className="w-50 h-50 d-block"
+                      src={post.eimage}
+                      alt=""
+                    />
                     <sup>You can't change the image</sup>
 
                     <input
@@ -158,7 +172,11 @@ const Posts = () => {
                 Close
               </button>
               <button
-              disabled={post.eitemName.length < 3 || post.econtact.length < 5 || post.ecollectFrom.length < 5}
+                disabled={
+                  post.eitemName.length < 3 ||
+                  post.econtact.length < 5 ||
+                  post.ecollectFrom.length < 5
+                }
                 type="button"
                 className="btn btn-primary"
                 onClick={handleClick}
@@ -174,6 +192,7 @@ const Posts = () => {
         <h1>Posts</h1>
         <div className="container">
           {posts.length === 0 && "No posts yet!!"}
+          {/* {console.log(posts)} */}
         </div>
         {posts.map((post) => {
           return (
@@ -190,6 +209,7 @@ const Posts = () => {
         Visibality={Visibality}
         ActualPost={ActualPost}
         changeVisibality={changeVisibality}
+        givePower={props.givePower}
       />
     </div>
   );
