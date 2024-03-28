@@ -78,8 +78,8 @@ const PostState = (props) => {
     //Delete the image from cloudinary TODO:
 
     //Logic to Delete an post
-    let newPost = posts.filter((note) => {
-      return note._id !== id;
+    let newPost = posts.filter((post) => {
+      return post._id !== id;
     });
     setPosts(newPost);
   };

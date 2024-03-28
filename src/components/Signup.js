@@ -1,10 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alerts/alertContext";
+import userContext from "../context/user/userContext";
 
 function Signup() {
   const context = useContext(alertContext);
   const { showAlert } = context;
+  const userCon = useContext(userContext);
+  const { signup } = userCon;
   const [loginDetails, setLoginDetails] = useState({
     name: "",
     email: "",
@@ -12,19 +15,12 @@ function Signup() {
     comfirmPass: "",
   });
   let navigate = useNavigate();
-  const host = process.env.REACT_APP_HOST_LINK;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginDetails.comfirmPass === loginDetails.password) {
       const { email, password, name } = loginDetails;
-      const response = await fetch(`${host}/api/auth/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password, name }),
-      });
-      const json = await response.json();
+      
+      const json = await signup(email, password, name);
       if (json.success) {
         localStorage.setItem("token", json.authtoken);
         navigate("/");

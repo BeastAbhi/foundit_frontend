@@ -1,24 +1,20 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alerts/alertContext";
+import userContext from "../context/user/userContext";
 
 function Login() {
   const context = useContext(alertContext);
   const { showAlert } = context;
+  const userCon = useContext(userContext)
+  const { login } = userCon;
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   // useNavigate hook is use to redirect the user to another location
   let navigate = useNavigate();
-  const host = process.env.REACT_APP_HOST_LINK;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${host}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginDetails),
-    });
-    const json = await response.json();
+    const json = await login(loginDetails.email, loginDetails.password)
+
     if (json.success) {
       //save the authtoken and Redirect
       localStorage.setItem("token", json.authtoken);

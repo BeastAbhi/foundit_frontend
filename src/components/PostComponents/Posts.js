@@ -12,15 +12,19 @@ const Posts = (props) => {
   const { posts, getPosts, editPost, getUserPosts } = context;
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      if (!props.userSpecific) {
-        getPosts();
+    async function allpoasts() {
+      if (localStorage.getItem("token")) {
+        if (!props.userSpecific) {
+          await getPosts();
+        } else {
+          await getUserPosts();
+        }
       } else {
-        getUserPosts();
+        navigate("/login");
       }
-    } else {
-      navigate("/login");
     }
+    allpoasts();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //This line is to set the visiblity of an actual post div
@@ -191,8 +195,7 @@ const Posts = (props) => {
       <div className="row my-3">
         <h1>Posts</h1>
         <div className="container">
-          {posts.length === 0 && "No posts yet!!"}
-          {/* {console.log(posts)} */}
+          {posts.length === 0 || posts.success ? "No posts yet!!": ""}
         </div>
         {posts.map((post) => {
           return (
