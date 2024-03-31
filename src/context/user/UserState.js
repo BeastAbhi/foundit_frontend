@@ -34,18 +34,41 @@ function UserState(props) {
   //Delete an user
   const deleteUser = async () =>{
     //api call
-
+    const response = await fetch(`${host}/api/auth/deleteuser`,{
+      method: 'DELETE',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-token": authToken
+      }
+    });
+    return(await response.json())
   }
 
   //Update an user
-  const updateUser = async () =>{
+  const updateUser = async (name) =>{
     //api call
-
+    const response = await fetch(`${host}/api/auth/updateuser`,{
+      method: 'PUT',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-token": authToken
+      },
+      body: JSON.stringify({name})
+    })
+    setUser(await response.json())
   }
   //Change password of an user
-  const changePass = async () =>{
+  const changePass = async (oldPassword, newPassword) =>{
     //api call
-
+    const response = await fetch(`${host}/api/auth/changepassword`,{
+      method: 'PUT',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-token": authToken
+      },
+      body: JSON.stringify({oldPassword, newPassword})
+    })
+    setUser(await response.json())
   }
 
   const getUser = async () =>{

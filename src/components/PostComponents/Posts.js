@@ -195,7 +195,7 @@ const Posts = (props) => {
       <div className="row my-3">
         <h1>Posts</h1>
         <div className="container">
-          {posts.length === 0 || posts.success ? "No posts yet!!": ""}
+          {posts.length === 0 && "No posts yet!!"}
         </div>
         {posts.map((post) => {
           return (

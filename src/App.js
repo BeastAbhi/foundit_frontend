@@ -10,6 +10,8 @@ import Signup from "./components/Signup";
 import AlertState from "./context/alerts/AlertState";
 import UserPosts from "./components/PostComponents/UserPosts";
 import UserState from "./context/user/UserState";
+import EditUser from "./components/EditUser";
+import ChangePass from "./components/ChangePass";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
                   <Route path="/login" element={<Login />}></Route>
                   <Route path="/signup" element={<Signup />}></Route>
                   <Route path="/userposts" element={<UserPosts />}></Route>
+                  <Route path="/edituser" element={<EditUser/>}></Route>
+                  <Route path="/changepassword" element={<ChangePass/>}></Route>
                 </Routes>
               </div>
             </BrowserRouter>
