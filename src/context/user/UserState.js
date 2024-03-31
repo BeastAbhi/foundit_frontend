@@ -82,9 +82,20 @@ function UserState(props) {
     setUser(await response.json())
   }
 
+  const verifyEmail = async (email, code) =>{
+    const response = await fetch(`${host}/api/auth/sendemail`,{
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({email, code})
+    })
+    return(await response.json())
+  }
+
   return (
     <UserContext.Provider
-    value={{user, login, signup, deleteUser, updateUser, changePass, getUser }}
+    value={{user, login, signup, deleteUser, updateUser, changePass, getUser, verifyEmail }}
     >
       {/* this line is compersory for using context api */}
       {props.children}

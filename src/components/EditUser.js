@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import userContext from '../context/user/userContext';
 import alertContext from '../context/alerts/alertContext';
@@ -24,6 +24,17 @@ function EditUser() {
         showAlert('User Edited succesfully', 'success')
         navigate('/')
       }
+
+      useEffect( () => {
+        if(localStorage.getItem('token')){
+          setChangedDetails({
+            name: user.name,
+            email: user.email
+          })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
+      
   return (
     <div>
       <form onSubmit={handleSubmit}>

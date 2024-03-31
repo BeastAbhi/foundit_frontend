@@ -13,12 +13,13 @@ function UserDetails() {
       setVisible(!visible)
   }
   useEffect( () => {
-     getUser()
+    if(localStorage.getItem('token')){
+      getUser()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const deleteAcc = () =>{
-      console.log(deleteUser())
       toggle()
       localStorage.removeItem('token')
       navigate('/signup')
