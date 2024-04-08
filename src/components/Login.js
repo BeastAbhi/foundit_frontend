@@ -2,18 +2,19 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alerts/alertContext";
 import userContext from "../context/user/userContext";
+import "../style/submitButton.css";
 
 function Login() {
   const context = useContext(alertContext);
   const { showAlert } = context;
-  const userCon = useContext(userContext)
+  const userCon = useContext(userContext);
   const { login } = userCon;
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   // useNavigate hook is use to redirect the user to another location
   let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const json = await login(loginDetails.email, loginDetails.password)
+    const json = await login(loginDetails.email, loginDetails.password);
 
     if (json.success) {
       //save the authtoken and Redirect
@@ -29,8 +30,8 @@ function Login() {
   };
 
   return (
-    <div className="mt-3">
-    <h1>Login to countinue to foundit</h1>
+    <div style={{ maxWidth: "500px", marginTop:"100px" }}>
+      <h1>Login to Continue</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
@@ -66,11 +67,22 @@ function Login() {
           />
         </div>
         <div>
-          <button type="submit" className="btn btn-primary">
+          <button className="submitBtn">
             Submit
+            <svg fill="white" viewBox="0 0 448 512" height="1em" className="arrow">
+              <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+            </svg>
           </button>
         </div>
-        <Link to={"/signup"}>don't have an account click here</Link>
+        <p>
+          Don't have an account 
+          <Link
+            to={"/signup"}
+            className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+          >
+            Click here
+          </Link>
+        </p>
       </form>
     </div>
   );

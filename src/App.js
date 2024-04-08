@@ -22,17 +22,20 @@ function App() {
             <BrowserRouter>
               <Navbar />
               <Alert message="This is test alert" />
-              <div className="container">
-                <Routes>
-                  <Route path="/" element={<Home />}></Route>
-                  <Route path="/about" element={<About />}></Route>
-                  <Route path="/login" element={<Login />}></Route>
-                  <Route path="/signup" element={<Signup />}></Route>
-                  <Route path="/userposts" element={<UserPosts />}></Route>
-                  <Route path="/edituser" element={<EditUser/>}></Route>
-                  <Route path="/changepassword" element={<ChangePass/>}></Route>
-                </Routes>
-              </div>
+                  <div className="container">
+                    <Routes>
+                      <Route path="/about" element={<About />}></Route>
+                      <Route path="/" element={<Home />}></Route>
+                      <Route path="/login" element={<Login />}></Route>
+                      <Route path="/signup" element={<Signup />}></Route>
+                      <Route path="/userposts" element={<UserPosts />}></Route>
+                      <Route path="/edituser" element={<EditUser />}></Route>
+                      <Route
+                        path="/changepassword"
+                        element={<ChangePass />}
+                      ></Route>
+                    </Routes>
+                  </div>;
             </BrowserRouter>
           </PostState>
         </AlertState>

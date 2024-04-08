@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alerts/alertContext";
 import userContext from "../context/user/userContext";
+import "../style/submitButton.css";
 
 function Signup() {
   const context = useContext(alertContext);
@@ -13,16 +14,16 @@ function Signup() {
     email: "",
     password: "",
     comfirmPass: "",
-    OTP: ""
+    OTP: "",
   });
-  const [active, setActive] = useState(true)
-  const [code, setCode] = useState()
+  const [active, setActive] = useState(true);
+  const [code, setCode] = useState();
   let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginDetails.comfirmPass === loginDetails.password) {
       const { email, password, name } = loginDetails;
-      if(parseInt(loginDetails.OTP) === code){
+      if (parseInt(loginDetails.OTP) === code) {
         const json = await signup(email, password, name);
         if (json.success) {
           localStorage.setItem("token", json.authtoken);
@@ -31,9 +32,8 @@ function Signup() {
         } else {
           showAlert(json.error, "danger");
         }
-      }
-      else{
-      showAlert("OTP is not valid", "danger");
+      } else {
+        showAlert("OTP is not valid", "danger");
       }
     } else {
       showAlert("Passwords dous't  match", "danger");
@@ -43,19 +43,19 @@ function Signup() {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
   };
 
-  const verify = async () =>{
-    setActive(!active)
-    let tempCode = Math.floor(100000 + Math.random() * 900000)
-    setCode(tempCode)
+  const verify = async () => {
+    setActive(!active);
+    let tempCode = Math.floor(100000 + Math.random() * 900000);
+    setCode(tempCode);
     setTimeout(() => {
-      setActive(true)
+      setActive(true);
     }, 60000);
-    let responce = await verifyEmail(loginDetails.email,tempCode);
+    let responce = await verifyEmail(loginDetails.email, tempCode);
     showAlert(responce.message, responce.success);
-  }
+  };
   return (
-    <div className="mt-3">
-    <h1>Create an account to use foundit</h1>
+    <div style={{ maxWidth: "500px", marginTop:"100px" }}>
+      <h1>Create an Account</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -88,9 +88,14 @@ function Signup() {
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
           </div>
-          <button type="button" className={`btn btn-primary ${!active ? "disabled": ""}`} onClick={verify}>
-              Send Mail
-          </button>
+
+          <button
+            type="button"
+            className={`btn btn-outline-secondary my-3 ${!active ? "disabled" : ""}`}
+            onClick={verify}
+          >
+            Send Mail📧
+          </button><br/>
           <sup>You can send mail after 1 minute</sup>
         </div>
         <div className="mb-3">
@@ -135,11 +140,23 @@ function Signup() {
           />
         </div>
         <div>
-          <button type="submit" className="btn btn-primary">
+          <button className="submitBtn">
             Submit
+            <svg fill="white" viewBox="0 0 448 512" height="1em" className="arrow">
+              <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+            </svg>
           </button>
         </div>
-        <Link to={"/login"}>already have an account click here</Link>
+        <p>
+          Already have an account
+          <Link
+            to={"/login"}
+            className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+          >
+            {" "}
+            Click here
+          </Link>
+        </p>
       </form>
     </div>
   );

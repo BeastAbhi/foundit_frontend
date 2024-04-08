@@ -20,7 +20,7 @@ const Posts = (props) => {
           await getUserPosts();
         }
       } else {
-        navigate("/login");
+        navigate("/about");
       }
     }
     allpoasts();
@@ -194,18 +194,17 @@ const Posts = (props) => {
 
       <div className="row my-3">
         <h1>Posts</h1>
-        <div className="container">
-          {posts.length === 0 && "No posts yet!!"}
-        </div>
-        {posts.map((post) => {
-          return (
-            <PostItem
-              key={post._id}
-              post={post}
-              changeVisibality={changeVisibality}
-            />
-          );
-        })}
+
+          {posts.length === 0 || posts.length === undefined ? "No posts yet!! Please reload the page":   
+          posts.map((post) => {
+            return (
+              <PostItem
+                key={post._id}
+                post={post}
+                changeVisibality={changeVisibality}
+              />
+            );
+          })}
       </div>
       <ActivePostItem
         updatePost={updatePost}

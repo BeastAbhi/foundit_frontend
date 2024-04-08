@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import postContext from "../../context/posts/postContext";
 import alertContext from "../../context/alerts/alertContext";
+import "../../style/postButton.css";
+import "../../style/cancleButton.css";
 
 function AddPostForm(props) {
   const alertcon = useContext(alertContext);
-  const {showAlert} = alertcon;
+  const { showAlert } = alertcon;
   const { changeFormVisibality, formVisibality } = props;
   const context = useContext(postContext);
   const { addPost } = context;
@@ -20,6 +22,7 @@ function AddPostForm(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
+    showAlert("Posting.....", "success",3000);
     changeFormVisibality();
     const data = new FormData();
     data.append("file", selectedImage);
@@ -41,10 +44,10 @@ function AddPostForm(props) {
           post.description,
           post.imageId
         );
-        showAlert('Post added','success')
+        showAlert("Post added", "success");
       })
       .catch((err) => {
-        showAlert(err,'danger')
+        showAlert(err, "danger");
       });
     setPost({
       itemName: "",
@@ -79,7 +82,10 @@ function AddPostForm(props) {
           position: "absolute",
           top: "50%",
           right: "50%%",
-          backgroundColor: "red",
+          padding: "35px",
+          background:
+            "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)",
+          borderRadius: "10px",
         }}
         onSubmit={handleClick}
       >
@@ -141,17 +147,23 @@ function AddPostForm(props) {
               required
             />
           </div>
-          <button
-            disabled={
-              post.itemName.length < 3 ||
-              post.contact.length < 5 ||
-              post.collectFrom.length < 5
-            }
-            type="submit"
-            className="btn btn-primary"
-          >
-            Post
-          </button>
+          <div className="d-flex justify-content-around ">
+            <button className="continue-application">
+              <div>
+                <div className="pencil"></div>
+                <div className="folder">
+                  <div className="top">
+                    <svg viewBox="0 0 24 27">
+                      <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                    </svg>
+                  </div>
+                  <div className="paper"></div>
+                </div>
+              </div>
+              Post
+            </button>
+            <button type="button" className="btn btn-danger" onClick={changeFormVisibality}>Cancel</button>
+          </div>
         </fieldset>
       </form>
     </div>

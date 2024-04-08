@@ -1,21 +1,22 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserDetails from "./UserDetails";
+import "../style/logoutButton.css";
+import image from "../assets/foundit.png"
 //We use useLocation hook for high lighiting the routen as user click it.
 function Navbar() {
   let location = useLocation();
-  const navigate = useNavigate()
-  const handleLogout = () =>{
-    localStorage.removeItem('token')
-    navigate('/login')
-  }
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
-
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar fixed-top navbar-expand-lg" style={{zIndex:"20"}}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            FoundIt
+            <img src={image } alt="FoundIt" style={{height:"50px", borderRadius:"5px"}}/>
           </Link>
           <button
             className="navbar-toggler"
@@ -31,12 +32,23 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/"? "active" : ""}`} aria-current="page" to="/">
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/" ? "active" : ""
+                  }`}
+                  aria-current="page"
+                  to="/"
+                >
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/about"? "active" : ""}`} to="/about">
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/about" ? "active" : ""
+                  }`}
+                  to="/about"
+                >
                   About
                 </Link>
               </li>
@@ -45,22 +57,31 @@ function Navbar() {
                   Your Posts
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link disabled" aria-disabled="true" to="/">
-                  Disabled
-                </Link>
-              </li>
             </ul>
+          </div>
+          <div className="d-flex">
             <div>
-            {!localStorage.getItem('token') ?
-              <form className="d-flex">
-                <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
-                <Link className="btn btn-primary mx-2" to="/signup" role="button">SignUp</Link>
-              </form>
-              : <button className="btn btn-primary" onClick={handleLogout}>Logout</button>}
+              {!localStorage.getItem("token") ? (
+                <form className="d-flex" >
+                  <Link type="button" className="btn btn-outline-primary mx-3" to="/login">LogIn</Link>
+                  <Link type="button" className="btn btn-outline-info" to="/signup">SignUp</Link>
+                </form>
+              ) : (
+                <button className="Btn" onClick={handleLogout}>
+                  <div className="sign">
+                    <svg viewBox="0 0 512 512">
+                      <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                    </svg>
+                  </div>
+
+                  <div className="text">Logout</div>
+                </button>
+              )}
             </div>
             <div>
-              <UserDetails/>
+              {localStorage.getItem("token") &&
+              <UserDetails />
+              }
             </div>
           </div>
         </div>

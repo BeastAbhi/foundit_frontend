@@ -5,6 +5,11 @@ function UserState(props) {
   const host = process.env.REACT_APP_HOST_LINK;
   const [user, setUser] = useState({})
   const authToken = localStorage.getItem("token");
+  const [loader, setLoader] = useState(false)
+
+  const setLoading = () =>{
+    setLoader(!loader)
+  }
   //Login 
   const login = async (email, password) =>{
     //api call
@@ -95,7 +100,7 @@ function UserState(props) {
 
   return (
     <UserContext.Provider
-    value={{user, login, signup, deleteUser, updateUser, changePass, getUser, verifyEmail }}
+    value={{user, login, signup, deleteUser, updateUser, changePass, getUser, verifyEmail, loader, setLoading }}
     >
       {/* this line is compersory for using context api */}
       {props.children}
