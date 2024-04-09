@@ -74,6 +74,7 @@ function AddPostForm(props) {
         width: "100%",
         backgroundColor: "red",
         zIndex: "10",
+        top:"100px"
       }}
     >
       <form

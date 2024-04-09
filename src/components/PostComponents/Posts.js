@@ -76,7 +76,7 @@ const Posts = (props) => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center position-relitive">
+    <div className="d-flex justify-content-center align-items-center position-relitive" style={{marginTop:"100px"}}>
       <button
         type="button"
         className="btn btn-primary d-none"

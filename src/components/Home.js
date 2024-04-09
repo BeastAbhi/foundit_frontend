@@ -9,7 +9,7 @@ function Home() {
     setFormVisibality(!formVisibality);
   };;
   return (
-    <div style={{ position: "relative", height: "100%", width: "100%", marginTop:"100px"}}>
+    <div style={{ position: "relative", height: "100%", width: "100%"}}>
       <AddPostForm
         changeFormVisibality={changeFormVisibality}
         formVisibality={formVisibality}
@@ -18,7 +18,7 @@ function Home() {
         className="buttonAdd"
         type="button"
         onClick={changeFormVisibality}
-        style={{ position: "absolute", top: "20px", right: "-10px" }}
+        style={{ position: "absolute", top: "120px", right: "-10px" }}
       >
         <span className="button__text">Add Post</span>
         <span className="button__icon">

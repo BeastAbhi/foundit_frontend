@@ -13,7 +13,7 @@ function Navbar() {
   };
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg" style={{zIndex:"20"}}>
+      <nav className="navbar fixed-top navbar-expand-lg" style={{backdropFilter:"blur(2px)"}}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src={image } alt="FoundIt" style={{height:"50px", borderRadius:"5px"}}/>
