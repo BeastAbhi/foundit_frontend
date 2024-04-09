@@ -10,6 +10,7 @@ function About() {
         margin: '0 auto',
         maxWidth: '800px',
         padding: '20px',
+        top:"100px"
     },
     header: {
         backgroundColor: '#f8f9fa',
