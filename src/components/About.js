@@ -53,14 +53,11 @@ return (
         </header>
         <main style={styles.main}>
             <section style={styles.section}>
-                <h2>Lost something?</h2>
-                <p>Post it here and let the community help you find it.</p>
-                <Link type="button" className="btn btn-dark" to="/signup">SignUp</Link>
-            </section>
-            <section style={styles.section}>
                 <h2>Found something?</h2>
                 <p>Post it here and help it get back to its rightful owner.</p>
                 <Link type="button" className="btn btn-dark" to="/login">LogIn</Link>
+                <p style={{display:"inline-block"}}>| - or - |</p>
+                <Link type="button" className="btn btn-dark" to="/signup">SignUp</Link>
             </section>
         </main>
         <section style={styles.about}>
@@ -73,8 +70,8 @@ return (
 </section>
         <section style={styles.testimonials}>
             <h2>Testimonials</h2>
-            <p>"I lost my wallet and Foundit helped me get it back. Thank you, Foundit!" - User A</p>
-            <p>"Foundit is a lifesaver. I found my lost dog through this platform." - User B</p>
+            <p>"I lost my wallet and Foundit helped me get it back. Thank you, Foundit!" - Nikhil Kadam</p>
+            <p>"Foundit is a lifesaver. I found my lost dog through this platform." - Prasad Kamble</p>
         </section>
         <footer style={styles.footer}>
             <p>© 2024 Foundit. All rights reserved.</p>

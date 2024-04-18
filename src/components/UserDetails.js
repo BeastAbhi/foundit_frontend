@@ -23,9 +23,11 @@ function UserDetails() {
 
   const deleteAcc = () => {
     toggle();
-    localStorage.removeItem("token");
-    deleteUser();
-    navigate("/signup");
+    if(window.confirm("Do you really want to delete your account")) {
+      localStorage.removeItem("token");
+      deleteUser();
+      navigate("/signup");
+    }
   };
   const edit = () => {
     navigate("/edituser");
@@ -37,8 +39,17 @@ function UserDetails() {
   };
 
   return (
-    <div className="d-flex justify-content-between" style={{ position: "relative" }}>
-      <img className="mx-3 userInfo" src={userImage} style={{ height: "40px" }} onClick={toggle} alt=""/>
+    <div
+      className="d-flex justify-content-between"
+      style={{ position: "relative" }}
+    >
+      <img
+        className="mx-3 userInfo"
+        src={userImage}
+        style={{ height: "40px" }}
+        onClick={toggle}
+        alt=""
+      />
       <div
         style={{
           display: visible ? "none" : "inline-block",

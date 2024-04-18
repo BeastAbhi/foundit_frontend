@@ -27,7 +27,7 @@ function ActivePostItem(props) {
         backdropFilter: "blur(2px)",
         zIndex: "2",
         display: `${Visibality ? "flex" : "none"}`,
-        top:"15px"
+        top: "15px",
       }}
       onClick={() => changeVisibality(ActualPost)}
     >
@@ -57,7 +57,10 @@ function ActivePostItem(props) {
             <button
               className="edit-button"
               onClick={() => {
-                updatePost(ActualPost);
+                if (window.confirm("Do you want to update your Post")) {
+                  updatePost(ActualPost);
+                  showAlert("Post Updated", "success");
+                }
               }}
             >
               <svg className="edit-svgIcon" viewBox="0 0 512 512">
@@ -67,8 +70,10 @@ function ActivePostItem(props) {
             <button
               className="button"
               onClick={() => {
-                deletePost(ActualPost._id);
-                showAlert("Deleted successfully", "success");
+                if (window.confirm("Do you want to Delete this Post")){
+                  deletePost(ActualPost._id);
+                  showAlert("Post Deleted", "success");
+                }
               }}
             >
               <svg viewBox="0 0 448 512" className="svgIcon">
